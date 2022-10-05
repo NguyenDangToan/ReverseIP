@@ -16,7 +16,7 @@ def main():
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0', 'Content-Type':'application/x-www-form-urlencoded'}
     data = "reverseip=%s" %ip
     proxies = {"http":"127.0.0.1:8080", "https":"127.0.0.1:8080"}
-    res = requests.post(url, data, headers=headers, proxies=proxies, verify=False)
+    res = requests.post(url, data, headers=headers, verify=False)
 
     soup = bs(res.text, 'html.parser')
     myTable = soup.find('table',{'class':'table table-condensed table-hover'})
