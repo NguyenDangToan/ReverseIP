@@ -1,8 +1,8 @@
 import sys
 import requests
-import pandas as pd
-import numpy as np
 from bs4 import BeautifulSoup as bs
+import urllib3
+urllib3.disable_warnings()
 
 
 def main():
@@ -13,10 +13,12 @@ def main():
 
     #reverse_ip
     url = "https://dnslytics.com/reverse-ip"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0', 'Content-Type':'application/x-www-form-urlencoded'}
     data = "reverseip=%s" %ip
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0','Content-Type': 'application/x-www-form-urlencoded'}
     proxies = {"http":"127.0.0.1:8080", "https":"127.0.0.1:8080"}
-    res = requests.post(url, data, headers=headers, verify=False)
+    res = requests.post(url, data, headers=headers, verify=False, proxies=proxies)
+
+    #print(res.text)
 
     soup = bs(res.text, 'html.parser')
     myTable = soup.find('table',{'class':'table table-condensed table-hover'})
@@ -29,5 +31,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
